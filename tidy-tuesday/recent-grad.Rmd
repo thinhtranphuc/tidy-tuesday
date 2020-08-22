@@ -1,0 +1,206 @@
+---
+title: "Recent Graduate"
+author: "Thinh"
+date: "8/22/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Set up 
+```{r}
+library(tidyverse)
+theme_set(theme_light())
+```
+
+```{r cars}
+dataset <- tidytuesdayR::tt_load("2018-10-16", 29)
+recent_grads <- dataset$`recent-grads` %>% 
+  janitor::clean_names() %>% 
+  mutate(major = str_to_title(major),
+         major = fct_reorder(major, median))
+
+```
+
+
+# EDA 
+## What are the most common majors?
+
+
+```{r}
+recent_grads %>% 
+  count(major_category, wt = total, sort = TRUE)
+```
+
+What major categories (eg. business, engineering, etc ) were the most common?
+
+```{r}
+by_major_category %>% 
+  mutate(major_category = fct_reorder(major_category, total)) %>%
+  pivot_longer(c(men, women), 
+               names_to = "gender",
+               values_to = "value") %>% 
+  ggplot(aes(major_category, value , fill = gender)) +
+  geom_col() + 
+  scale_y_continuous(labels = scales::dollar_format()) +
+  labs(
+    x = "",
+    y = "Total # graduate",
+    title = "What are the most common major categories?"
+  ) + 
+  coord_flip() + 
+  theme(legend.position = "None")
+```
+
+## What category majors make more money than others ? 
+
+```{r}
+recent_grads %>%
+  ggplot(aes(fct_reorder(major_category, median), median, fill = major_category)) + 
+  geom_boxplot() + 
+  expand_limits(y = 0) + 
+  scale_y_continuous(labels = scales::dollar_format()) + 
+  theme(legend.position = "none") + 
+  coord_flip()
+```
+
+## What are the highest earning majors ? 
+
+```{r}
+grads_processing <- recent_grads %>% 
+  arrange(desc(median)) %>% 
+  select(major, major_category, median, p25th, p75th, sample_size)
+```
+
+```{r}
+grads_processing %>% 
+  filter(sample_size >= 100) %>% 
+  head(20) %>% 
+  mutate(major = fct_reorder(major, median)) %>% 
+  ggplot(aes(major, median, colour = major_category)) + 
+  geom_point() +  
+  geom_errorbar(aes(ymin = p25th, ymax = p75th)) + 
+  expand_limits(y = 0) + 
+  scale_y_continuous(labels = scales::dollar_format()) + 
+  labs(
+    title = "What are the highest-earning major?",
+    subtitle = "Top 20 majors with at least 100 graduate surveys",
+    y = "Median", 
+    x = ""
+  ) +
+  coord_flip()
+```
+  
+
+## How does gender breakdown related to typical earnings?
+
+```{r}
+recent_grads %>% 
+  arrange(desc(total)) %>% 
+  head(20) %>% 
+  pivot_longer(c(men, women),
+               names_to = "gender") %>% 
+  mutate(major = fct_reorder(major, total)) %>% 
+  ggplot(aes(major, value, fill = gender)) + 
+  geom_col() + 
+  coord_flip()
+```
+
+```{r by_major_category}
+by_major_category <- recent_grads %>% 
+  group_by(major_category) %>% 
+  summarise(across(c(total, men, women), sum, na.rm = TRUE),
+            median_salary = sum(median * sample_size) / sum(sample_size)) %>% 
+  mutate(share_women = women/total) %>% 
+  arrange(desc(share_women))
+```
+
+
+
+```{r}
+library(plotly)
+
+g <- recent_grads %>% 
+  mutate(major_category = fct_lump(major_category, 4)) %>% 
+  ggplot(aes(share_women, median, label = major_category)) + 
+  geom_point(aes(colour = major_category, size = sample_size)) + 
+  geom_smooth(method = "lm") + 
+  expand_limits(y = 0) +
+  scale_x_continuous(labels = scales::percent_format()) + 
+  scale_y_continuous(labels = scales::dollar_format())
+
+ggplotly(g)
+```
+
+Let's test the hypothesis all major categories
+
+```{r}
+recent_grads %>% 
+  select(major, total, share_women, sample_size, median) %>% 
+  lm(median ~ share_women, data = ., weights = sample_size) %>% 
+  broom::tidy()
+```
+
+
+How about within in major categories, the the correlation is still available ?
+
+```{r}
+library(broom)
+
+recent_grads %>% 
+  select(major, major_category, total, share_women, sample_size, median) %>%
+  add_count(major_category) %>% 
+  filter(n >= 10) %>% 
+  nest(-major_category) %>% 
+  mutate(model = map(data, ~ lm(median ~ share_women, data = ., weights = sample_size)), 
+         tidied = map(model, tidy)) %>% 
+  unnest(tidied) %>% 
+  filter(term == "share_women") %>% 
+  arrange(estimate) %>% 
+  mutate(fdr = p.adjust(p.value, method = "fdr"))
+```
+
+
+# Appendix 
+
+## How big is the sample size we have 
+
+```{r}
+grads_processing %>% 
+  ggplot(aes(sample_size, median)) + 
+  geom_point() + 
+  scale_x_log10() + 
+  geom_text(aes(label = major), check_overlap = TRUE, hjust = 1, vjust = 1)
+```
+
+
+```{r}
+knitr::knit_exit()
+```
+
+This is not gonna be run 
+```{r}
+recent_grads %>%
+  group_by(major_category) %>% 
+  summarise(median = median(median)) %>% 
+  ggplot(aes(fct_reorder(major_category, median), median)) + 
+  geom_col() + 
+  scale_y_continuous(labels = scales::dollar_format()) + 
+  coord_flip() 
+```
+
+```{r}
+grads_processing %>% 
+  filter(sample_size >= 100) %>% 
+  tail(20) %>% 
+  mutate(major = fct_reorder(major, median)) %>% 
+  ggplot(aes(major, median, colour = major_category)) + 
+  geom_point() +  
+  geom_errorbar(aes(ymin = p25th, ymax = p75th)) + 
+  expand_limits(y = 0) + 
+  scale_y_continuous(labels = scales::dollar_format()) + 
+  coord_flip()
+```
+
