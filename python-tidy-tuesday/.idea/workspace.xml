@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="8a8c806e-cf33-419b-9d62-d0f34674308b" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DaemonCodeAnalyzer">
+    <disable_hints>
+      <file url="file://$PROJECT_DIR$/recent-graduate.py" />
+    </disable_hints>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="FlaskConsoleOptions" custom-start-script="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))">
+    <envs>
+      <env key="FLASK_APP" value="app" />
+    </envs>
+    <option name="myCustomStartScript" value="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))" />
+    <option name="myEnvs">
+      <map>
+        <entry key="FLASK_APP" value="app" />
+      </map>
+    </option>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/recent-graduate.py" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="JupyterTrust" id="e218b614-ecda-40b9-a926-7a66c235366f" />
+  <component name="ProjectId" id="1gS9gPggU3NsRlasm1nDlydbDOl" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="run.code.analysis.last.selected.profile" value="aDefault" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+  </component>
+  <component name="PyConsoleOptionsProvider">
+    <option name="myPythonConsoleState">
+      <console-settings>
+        <option name="useSoftWraps" value="true" />
+      </console-settings>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="python-tidy-tuesday" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8a8c806e-cf33-419b-9d62-d0f34674308b" name="Default Changelist" comment="" />
+      <created>1598097236833</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1598097236833</updated>
+      <workItem from="1598097239478" duration="5628000" />
+      <workItem from="1598117901824" duration="8194000" />
+      <workItem from="1598175833613" duration="1304000" />
+      <workItem from="1598177387454" duration="972000" />
+      <workItem from="1598181450310" duration="2909000" />
+      <workItem from="1598200501799" duration="235000" />
+      <workItem from="1598200758787" duration="4102000" />
+      <workItem from="1598286190086" duration="1423000" />
+      <workItem from="1598291136184" duration="248000" />
+      <workItem from="1598291545354" duration="50000" />
+      <workItem from="1598370809511" duration="686000" />
+      <workItem from="1598371684520" duration="307000" />
+      <workItem from="1598375021985" duration="9811000" />
+      <workItem from="1598466439895" duration="1613000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="474" y="178" key="#Inspections" timestamp="1598461790073">
+      <screen x="0" y="23" width="1680" height="951" />
+    </state>
+    <state x="474" y="178" key="#Inspections/0.23.1680.951@0.23.1680.951" timestamp="1598461790073" />
+    <state x="528" y="235" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1598291146825">
+      <screen x="0" y="23" width="1680" height="945" />
+    </state>
+    <state x="528" y="235" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.23.1680.945@0.23.1680.945" timestamp="1598291146825" />
+    <state x="599" y="364" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1598461146304">
+      <screen x="0" y="23" width="1680" height="951" />
+    </state>
+    <state x="599" y="361" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.23.1680.943@0.23.1680.943" timestamp="1598199272107" />
+    <state x="599" y="364" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.23.1680.951@0.23.1680.951" timestamp="1598461146304" />
+    <state x="341" y="132" key="SettingsEditor" timestamp="1598463231171">
+      <screen x="0" y="23" width="1680" height="951" />
+    </state>
+    <state x="341" y="131" key="SettingsEditor/0.23.1680.943@0.23.1680.943" timestamp="1598204348747" />
+    <state x="341" y="132" key="SettingsEditor/0.23.1680.951@0.23.1680.951" timestamp="1598463231171" />
+    <state x="489" y="215" width="700" height="530" key="recent.locations.popup" timestamp="1598200572574">
+      <screen x="0" y="23" width="1680" height="943" />
+    </state>
+    <state x="489" y="215" width="700" height="530" key="recent.locations.popup/0.23.1680.943@0.23.1680.943" timestamp="1598200572574" />
+    <state x="505" y="230" width="670" height="679" key="search.everywhere.popup" timestamp="1598460294780">
+      <screen x="0" y="23" width="1680" height="951" />
+    </state>
+    <state x="505" y="228" key="search.everywhere.popup/0.23.1680.943@0.23.1680.943" timestamp="1598175837415" />
+    <state x="505" y="228" width="670" height="674" key="search.everywhere.popup/0.23.1680.945@0.23.1680.945" timestamp="1598120795486" />
+    <state x="505" y="229" width="670" height="676" key="search.everywhere.popup/0.23.1680.948@0.23.1680.948" timestamp="1598370946464" />
+    <state x="505" y="230" width="670" height="679" key="search.everywhere.popup/0.23.1680.951@0.23.1680.951" timestamp="1598460294780" />
+  </component>
+</project>
