@@ -1,0 +1,287 @@
+---
+title: "Wine Ratings"
+author: "Thinh"
+date: "9/4/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Loading the packages 
+
+```{r}
+library(tidyverse)
+theme_set(theme_light())
+```
+
+# Loading the data 
+```{r}
+tt <- tidytuesdayR::tt_load("2019-05-28")
+wine_rating <- tt$`winemag-data-130k-v2` %>% 
+  select(-X1)
+```
+
+# Cleaning Data & EDA 
+```{r}
+wine_rating <- wine_rating %>% 
+  mutate(year = as.integer(str_extract(title, "20\\d\\d")),
+         year = ifelse(year < 2000, NA, year)) %>% 
+  filter(!is.na(price))
+```
+
+```{r}
+wine_rating %>% 
+  count(country, sort = TRUE)
+
+wine_rating %>% 
+  count(designation, sort = TRUE)
+
+wine_rating %>% 
+  count(country, region_1, sort = TRUE)
+
+wine_rating %>% 
+  ggplot(aes(year)) +
+  geom_histogram()
+
+wine_rating %>% 
+  ggplot(aes(points)) + 
+  geom_histogram(binwidth = 1)
+
+wine_rating %>% 
+  ggplot(aes(price)) + 
+  geom_histogram() + 
+  scale_x_log10()
+```
+
+The distribution of points and price looks like a normal distribution. Let's try to predict with linear regression. 
+
+```{r}
+wine_rating %>% ggplot(aes(price, points)) + 
+  geom_point() + 
+  geom_smooth(method = "lm") + 
+  scale_x_log10()
+
+summary(lm(points ~ log2(price), data = wine_rating))
+```
+
+The coefficient is significant. Every time the price double, the expected points goes up by 2.
+
+### What features we can add in the model? 
+
+Have a look on country
+
+```{r}
+wine_rating %>% 
+  mutate(country = fct_relevel(fct_lump_n(country, 7), "US")) %>% 
+  mutate(country = fct_reorder(country, points)) %>% 
+  ggplot(aes(country, points)) + 
+  geom_boxplot() + 
+  coord_flip()
+```
+The boxplot suggest that the points varies among countries. Try fitting in the model 
+
+```{r}
+wine_rating %>% 
+  mutate(country = fct_relevel(fct_lump_n(country, 7), "US")) %>% 
+  lm(points ~ log2(price) + country, data= .) %>% 
+  summary()
+```
+Slightly reduce RSE
+
+
+Should we use year as a features in the model? 
+```{r}
+wine_rating %>% 
+  ggplot(aes(year, points, group = year)) +
+  geom_boxplot()
+
+wine_rating %>%
+  count(year)
+```
+
+```{r}
+wine_rating %>% 
+  mutate(country = fct_relevel(fct_lump_n(country, 7), "US")) %>% 
+  lm(points ~ log2(price) + country + year , data= .) %>% 
+  summary()
+```
+The p-value is significant. 
+
+How about taster? 
+
+```{r}
+wine_rating %>% 
+  mutate(taster_name = fct_relevel(fct_lump_n(taster_name, 6), "Missing")) %>% 
+  mutate(taster_name = fct_reorder(taster_name, points)) %>% 
+  ggplot(aes(taster_name, points)) + 
+  geom_boxplot() + 
+  coord_flip()
+```
+
+Let's finalise the model 
+```{r}
+library(broom)
+model <- wine_rating %>% 
+  replace_na(list(taster_name = "Missing")) %>% 
+  mutate(country = fct_relevel(fct_lump_n(country, 7), "US"),
+         taster_name = fct_relevel(fct_lump_n(taster_name, 6), "Missing")) %>% 
+  lm(points ~ log2(price) + country + year + taster_name , data= .) 
+
+# coefficient plots 
+model %>% 
+  tidy(conf.int = TRUE) %>% 
+  filter(term != "(Intercept)") %>%
+  mutate(term = str_replace(term, "country", "Country: "),
+         term = str_replace(term, "taster_name", "Taster: "),
+         term = fct_reorder(term, estimate)) %>% 
+  ggplot(aes(estimate, term, colour = term)) +
+  geom_point() + 
+  geom_errorbarh(aes(xmin = conf.low, xmax = conf.high)) +
+  labs(
+    title = "Coefficient plots",
+    x = "Estimate",
+    y = ""
+  )
+```
+
+Coefficient plot suggest all terms are significant
+
+Have a look on how the fitted point versus the actual points
+
+```{r}
+augment(model) %>% 
+  ggplot(aes(.fitted, points)) +
+  geom_point(alpha = .1)
+
+tidy(anova(model)) %>% 
+  mutate(sumsq/sum(sumsq))
+```
+
+Only a small amount of variance explaied by country, year, taster_name
+
+
+### Lasso regression on words in description 
+
+
+Firstly, split words in the description and filter out irrelevant words for the model 
+```{r}
+library(tidytext)
+
+wine_rating_words <- wine_rating %>% 
+  mutate(wine_id = row_number()) %>% 
+  unnest_tokens(word, description) %>% 
+  anti_join(stop_words, by = "word") %>% 
+  filter(!word %in% c("wine", "drink"),
+         str_detect(word, '[a-z]'))
+``` 
+
+```{r}
+wine_rating_words %>% 
+  count(word, sort = TRUE) %>% 
+  head(20) %>% 
+  mutate(word = fct_reorder(word, n)) %>% 
+  ggplot(aes(word, n)) + 
+  geom_col() + 
+  labs(
+    title = "Most common words in the description",
+    x = "",
+    y = "Occurences"
+  ) +
+  coord_flip()
+```
+
+```{r}
+library(widyr)
+
+wine_words_filtered <- wine_rating_words %>% 
+  distinct(wine_id, word) %>% 
+  add_count(word) %>% 
+  filter(n >= 100) 
+
+wine_words_filtered %>% 
+  pairwise_cor(word , wine_id, sort = TRUE)
+```
+
+```{r}
+library(Matrix)
+
+wine_word_matrix <- wine_words_filtered %>% 
+  cast_sparse(wine_id, word)
+
+wine_ids <- as.integer(rownames(wine_word_matrix))
+scores <- wine_rating$points[wine_ids]
+
+library(glmnet)
+wine_word_matrix_extra <- cbind(wine_word_matrix, log_price = log2(wine_rating$price[wine_ids]))
+
+glmnet_model <- glmnet(wine_word_matrix_extra, scores)
+
+glmnet_model %>% 
+  tidy() %>% 
+  filter(term %in% c("rich", "black", "simple", "complex", "vineyard")) %>% 
+  ggplot(aes(lambda, estimate, colour = term)) +
+  geom_line() + 
+  scale_x_log10() + 
+  geom_hline(lty = 2, yintercept = 0)
+
+
+glmnet_model %>% 
+  tidy() %>% 
+  count(lambda) %>% 
+  ggplot(aes(lambda, n)) + 
+  geom_line() + 
+  scale_x_log10()
+```
+
+```{r}
+library(doMC)
+registerDoMC(cores = 4)
+cv_glmnet_model <- cv.glmnet(wine_word_matrix_extra, scores, parallel = TRUE)
+
+ plot(cv_glmnet_model)
+```
+
+```{r}
+lexicon <- cv_glmnet_model$glmnet.fit %>% 
+  tidy() %>% 
+  filter(lambda == cv_glmnet_model$lambda.1se,
+         term != "(Intercept)") %>% 
+  select(word = term, coefficient = estimate)
+
+lexicon %>% 
+  arrange(coefficient) %>% 
+  group_by(direction = ifelse(coefficient < 0, "Negative", "Positive")) %>% 
+  top_n(10, abs(coefficient)) %>% 
+  mutate(word = fct_reorder(word, coefficient)) %>% 
+  ggplot(aes(word, coefficient, fill = direction)) +
+  geom_col() + 
+  coord_flip() +
+  labs(y = "Estimate the effect of the word on the wine points",
+       title = "What words are predictive of a wine's score?")
+```
+
+```{r}
+wine_rating_words %>% 
+  filter(wine_id %in% sample(unique(wine_id), 6)) %>% 
+  select(title, word, points) %>% 
+  mutate(wine = str_c(str_trunc(title , 40), "(", points, ")")) %>% 
+  inner_join(lexicon, by = "word") %>% 
+  group_by(title, word) %>% 
+  summarise(coefficient = mean(coefficient)) %>% 
+  ungroup() %>% 
+  mutate(direction = ifelse(coefficient < 0, "Negative", "Positive"),
+    word = fct_reorder(word, coefficient)) %>% 
+  ggplot(aes(word, coefficient, fill = direction)) + 
+  geom_col(show.legend = FALSE) + 
+  coord_flip() + 
+  facet_wrap(~ title, scales = "free_y") + 
+  labs(
+    title = "How a lasso regression woud predict each wine's scores",
+    subtitle = "Using a lasso regression with an extra term for price",
+    x = "",
+    y = "Effect on scores"
+  )
+```
+
+

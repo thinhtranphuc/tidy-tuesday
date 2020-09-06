@@ -1,0 +1,149 @@
+---
+title: "Medium Articles"
+author: "Thinh"
+date: "8/31/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(tidytext)
+theme_set(theme_light())
+```
+
+
+```{r}
+tt <- tidytuesdayR::tt_load("2018-12-04")
+medium_datasci <- tt$medium_datasci %>% 
+  select(-x1)
+```
+
+```{r}
+medium_datasci %>% 
+  count(publication, sort = TRUE)
+```
+
+```{r}
+medium_datasci %>% 
+  count(author, sort = TRUE)
+```
+
+```{r}
+medium_datasci %>% 
+  summarise(across(starts_with('tag'), sum))
+```
+
+```{r}
+medium_pivot_longer <- medium_datasci %>% 
+  pivot_longer(
+    starts_with('tag'),
+    names_to = "tag"
+  ) %>% 
+  mutate(tag = str_remove(tag, "tag_")) %>% 
+  filter(value == 1)
+```
+
+```{r}
+medium_pivot_longer %>% 
+  count(tag, sort = TRUE)
+```
+
+
+```{r}
+medium_pivot_longer %>% 
+  group_by(tag) %>% 
+  summarise(median_claps = median(claps)) %>% 
+  arrange(desc(median_claps))
+
+medium_datasci %>% 
+  ggplot(aes(claps)) +
+  geom_histogram() +
+  scale_x_log10(label = scales::comma_format())
+
+medium_datasci %>% 
+  mutate(reading_time = pmin(10, reading_time)) %>% 
+  ggplot(aes(reading_time)) + 
+  geom_histogram(binwidth = .5) + 
+  scale_x_continuous(breaks = seq(2, 10, 2), 
+                     labels = c(seq(2, 8, 2), "10+")) + 
+  labs(x = "Medium reading time")
+
+medium_pivot_longer %>% 
+  group_by(tag) %>% 
+  summarise(reading_time = mean(reading_time)) %>% 
+  arrange(desc(reading_time))
+```
+
+### Text Mining 
+
+```{r}
+medium_words <- medium_datasci %>% 
+  filter(!is.na(title)) %>% 
+  transmute(post_id = row_number(), 
+            title, subtitle, year, reading_time, claps) %>% 
+  unnest_tokens(word, title) %>% 
+  anti_join(stop_words, by = "word") %>% 
+  filter(!(word %in% c("de", "en", "la", "para")),
+         str_detect(word, '[a-z]'))
+
+medium_words %>% 
+  count(word, sort = TRUE) %>%
+  mutate(word = fct_reorder(word, n)) %>% 
+  head(20) %>% 
+  ggplot(aes(n, word)) +
+  geom_col() +
+  labs(title = "Common words in Medium post titles",
+       x = "frequency", 
+       y = "")
+```
+
+```{r}
+medium_words_filtered <- medium_words %>% 
+  add_count(word) %>% 
+  filter(n >= 250)
+
+tag_claps <- medium_words_filtered %>% 
+  group_by(word) %>% 
+  summarise(median_claps = median(claps),
+            geometric_mean_claps = exp(mean(log(claps + 1))) - 1 ,
+            occurences = n()) %>% 
+  arrange(desc(median_claps))
+   
+```
+
+```{r}
+library(widyr)
+library(ggraph)
+library(igraph)
+
+top_word_cors <- medium_words_filtered %>% 
+  select(post_id, word) %>% 
+  pairwise_cor(word, post_id, sort = TRUE) %>% 
+  head(150)
+
+vertices <- tag_claps %>% 
+  filter(word %in% top_word_cors$item1 |
+           word %in% top_word_cors$item2)
+set.seed(2018)
+top_word_cors %>% 
+  graph_from_data_frame(vertices = vertices) %>% 
+  ggraph(layout = "fr") + 
+  geom_edge_link() + 
+  geom_node_point(aes(size = occurences * 1.1 )) + 
+  geom_node_point(aes(size = occurences, colour = geometric_mean_claps)) +
+  geom_node_text(aes(label = name), repel = TRUE) +
+  scale_colour_gradient2(low = "blue",
+                         high = "red", 
+                         midpoint = 10) + 
+   theme_void() + 
+   labs(title = "What's hot and what's not in the Medium articles",
+        subtitle = "Colour shows the geomtric mean of # claps on articles with this word in the title",
+        size = "",
+        colour = "") + 
+  theme(legend.position = "none")
+```
+

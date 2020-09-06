@@ -12,9 +12,14 @@
       <file url="file://$PROJECT_DIR$/recent-graduate.py" />
     </disable_hints>
   </component>
+  <component name="ExportToHTMLSettings">
+    <option name="printScope" value="1" />
+    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/exportToHTML" />
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Jupyter Notebook" />
         <option value="Python Script" />
       </list>
     </option>
@@ -31,7 +36,7 @@
     </option>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/recent-graduate.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/recent-graduate.py" root0="SKIP_INSPECTION" />
   </component>
   <component name="JupyterTrust" id="e218b614-ecda-40b9-a926-7a66c235366f" />
   <component name="ProjectId" id="1gS9gPggU3NsRlasm1nDlydbDOl" />
@@ -43,6 +48,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Python" />
     <property name="run.code.analysis.last.selected.profile" value="aDefault" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
@@ -76,6 +82,33 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="medium-articles" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="python-tidy-tuesday" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/medium-articles.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.medium-articles" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -98,7 +131,22 @@
       <workItem from="1598370809511" duration="686000" />
       <workItem from="1598371684520" duration="307000" />
       <workItem from="1598375021985" duration="9811000" />
-      <workItem from="1598466439895" duration="1613000" />
+      <workItem from="1598466439895" duration="3442000" />
+      <workItem from="1598546643545" duration="4855000" />
+      <workItem from="1598802155187" duration="1085000" />
+      <workItem from="1598804997848" duration="680000" />
+      <workItem from="1598889836066" duration="175000" />
+      <workItem from="1598891005732" duration="630000" />
+      <workItem from="1598891684739" duration="1702000" />
+      <workItem from="1599035148082" duration="294000" />
+      <workItem from="1599042126897" duration="2804000" />
+      <workItem from="1599045056479" duration="136000" />
+      <workItem from="1599045200699" duration="1538000" />
+      <workItem from="1599052410911" duration="6782000" />
+      <workItem from="1599316088550" duration="5392000" />
+      <workItem from="1599328490205" duration="1470000" />
+      <workItem from="1599372600753" duration="9552000" />
+      <workItem from="1599409009595" duration="3847000" />
     </task>
     <servers />
   </component>
@@ -106,34 +154,64 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="474" y="178" key="#Inspections" timestamp="1598461790073">
+    <state x="474" y="178" key="#Inspections" timestamp="1598545523294">
       <screen x="0" y="23" width="1680" height="951" />
     </state>
-    <state x="474" y="178" key="#Inspections/0.23.1680.951@0.23.1680.951" timestamp="1598461790073" />
-    <state x="528" y="235" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1598291146825">
-      <screen x="0" y="23" width="1680" height="945" />
+    <state x="474" y="178" key="#Inspections/0.23.1680.951@0.23.1680.951" timestamp="1598545523294" />
+    <state x="304" y="154" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1598549717427">
+      <screen x="0" y="23" width="1680" height="951" />
+    </state>
+    <state x="304" y="154" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1680.951@0.23.1680.951" timestamp="1598549717427" />
+    <state x="528" y="236" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1598549882037">
+      <screen x="0" y="23" width="1680" height="951" />
     </state>
     <state x="528" y="235" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.23.1680.945@0.23.1680.945" timestamp="1598291146825" />
-    <state x="599" y="364" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1598461146304">
-      <screen x="0" y="23" width="1680" height="951" />
-    </state>
-    <state x="599" y="361" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.23.1680.943@0.23.1680.943" timestamp="1598199272107" />
-    <state x="599" y="364" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.23.1680.951@0.23.1680.951" timestamp="1598461146304" />
-    <state x="341" y="132" key="SettingsEditor" timestamp="1598463231171">
-      <screen x="0" y="23" width="1680" height="951" />
-    </state>
-    <state x="341" y="131" key="SettingsEditor/0.23.1680.943@0.23.1680.943" timestamp="1598204348747" />
-    <state x="341" y="132" key="SettingsEditor/0.23.1680.951@0.23.1680.951" timestamp="1598463231171" />
-    <state x="489" y="215" width="700" height="530" key="recent.locations.popup" timestamp="1598200572574">
+    <state x="528" y="236" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.23.1680.951@0.23.1680.951" timestamp="1598549882037" />
+    <state x="599" y="361" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1598892992759">
       <screen x="0" y="23" width="1680" height="943" />
     </state>
-    <state x="489" y="215" width="700" height="530" key="recent.locations.popup/0.23.1680.943@0.23.1680.943" timestamp="1598200572574" />
-    <state x="505" y="230" width="670" height="679" key="search.everywhere.popup" timestamp="1598460294780">
+    <state x="599" y="361" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.23.1680.943@0.23.1680.943" timestamp="1598892992759" />
+    <state x="599" y="364" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.23.1680.951@0.23.1680.951" timestamp="1598461146304" />
+    <state x="341" y="132" key="SettingsEditor" timestamp="1599374315369">
+      <screen x="0" y="23" width="1680" height="948" />
+    </state>
+    <state x="341" y="131" key="SettingsEditor/0.23.1680.943@0.23.1680.943" timestamp="1598892371157" />
+    <state x="341" y="132" key="SettingsEditor/0.23.1680.948@0.23.1680.948" timestamp="1599374315369" />
+    <state x="341" y="132" key="SettingsEditor/0.23.1680.951@0.23.1680.951" timestamp="1598551179660" />
+    <state width="500" height="445" key="SwitcherDM" timestamp="1599045103354">
+      <screen x="0" y="23" width="1680" height="945" />
+    </state>
+    <state width="500" height="445" key="SwitcherDM/0.23.1680.945@0.23.1680.945" timestamp="1599045103354" />
+    <state width="840" height="469" key="XDebugger.FullValuePopup" timestamp="1599052507541">
+      <screen x="0" y="23" width="1680" height="943" />
+    </state>
+    <state width="840" height="469" key="XDebugger.FullValuePopup/0.23.1680.943@0.23.1680.943" timestamp="1599052507541" />
+    <state x="379" y="146" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1598546634387">
       <screen x="0" y="23" width="1680" height="951" />
     </state>
-    <state x="505" y="228" key="search.everywhere.popup/0.23.1680.943@0.23.1680.943" timestamp="1598175837415" />
-    <state x="505" y="228" width="670" height="674" key="search.everywhere.popup/0.23.1680.945@0.23.1680.945" timestamp="1598120795486" />
-    <state x="505" y="229" width="670" height="676" key="search.everywhere.popup/0.23.1680.948@0.23.1680.948" timestamp="1598370946464" />
+    <state x="379" y="146" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.23.1680.951@0.23.1680.951" timestamp="1598546634387" />
+    <state x="539" y="202" width="602" height="580" key="find.popup" timestamp="1598551155600">
+      <screen x="0" y="23" width="1680" height="951" />
+    </state>
+    <state x="539" y="202" width="602" height="580" key="find.popup/0.23.1680.951@0.23.1680.951" timestamp="1598551155600" />
+    <state width="600" height="437" key="javadoc.popup" timestamp="1598892046513">
+      <screen x="0" y="23" width="1680" height="943" />
+    </state>
+    <state width="600" height="437" key="javadoc.popup/0.23.1680.943@0.23.1680.943" timestamp="1598892046513" />
+    <state width="600" height="440" key="javadoc.popup/0.23.1680.951@0.23.1680.951" timestamp="1598549721388" />
+    <state x="489" y="217" width="700" height="536" key="recent.locations.popup" timestamp="1599409336092">
+      <screen x="0" y="23" width="1680" height="953" />
+    </state>
+    <state x="489" y="215" width="700" height="530" key="recent.locations.popup/0.23.1680.943@0.23.1680.943" timestamp="1598200572574" />
+    <state x="489" y="216" width="700" height="533" key="recent.locations.popup/0.23.1680.948@0.23.1680.948" timestamp="1599328527528" />
+    <state x="489" y="217" width="700" height="536" key="recent.locations.popup/0.23.1680.953@0.23.1680.953" timestamp="1599409336092" />
+    <state x="505" y="230" width="670" height="680" key="search.everywhere.popup" timestamp="1599411998825">
+      <screen x="0" y="23" width="1680" height="953" />
+    </state>
+    <state x="505" y="228" width="670" height="676" key="search.everywhere.popup/0.23.1680.943@0.23.1680.943" timestamp="1598891857392" />
+    <state x="505" y="228" width="670" height="674" key="search.everywhere.popup/0.23.1680.945@0.23.1680.945" timestamp="1599043610633" />
+    <state x="505" y="229" width="670" height="676" key="search.everywhere.popup/0.23.1680.948@0.23.1680.948" timestamp="1599375254545" />
     <state x="505" y="230" width="670" height="679" key="search.everywhere.popup/0.23.1680.951@0.23.1680.951" timestamp="1598460294780" />
+    <state x="505" y="230" width="670" height="680" key="search.everywhere.popup/0.23.1680.953@0.23.1680.953" timestamp="1599411998825" />
   </component>
 </project>
