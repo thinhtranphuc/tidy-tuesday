@@ -52,3 +52,6 @@ recent_grad_process = recent_grad\
     .plot(x="median", y="major", kind="scatter")
 
 plt.show()
+
+
+telecom_churn.shape
